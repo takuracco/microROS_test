@@ -183,12 +183,15 @@ void StartDefaultTask(void *argument)
     "/from_f767zi"));
 
   //配列データを扱うときの処理
+  int i = 0;
   rosidl_runtime_c__String__init(&msg);
-  char hello[] = "Hello world from f7";
-  rosidl_runtime_c__String__assignn(&msg.data, hello, sizeof(hello));
+  char hello[128];
   /* Infinite loop */
   for(;;)
   {
+	 i++;
+	 sprintf(hello,"Hello world from f7:%d",i);
+	 rosidl_runtime_c__String__assignn(&msg.data, hello, sizeof(hello));
 	 RCSOFTCHECK(rcl_publish(&publisher, &msg, NULL));
 	 osDelay(500);
   }
